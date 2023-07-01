@@ -7,4 +7,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="sql\" />
+    <None Remove="ze_data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="sql\" />
+    <Folder Include="ze_data\" />
+  </ItemGroup>
 </Project>
