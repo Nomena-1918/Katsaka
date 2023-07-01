@@ -6,7 +6,7 @@
 
 /*
 Scaffolding :
-dotnet ef dbcontext scaffold "Name=ConnectionStrings:SamboContext" Npgsql.EntityFrameworkCore.PostgreSQL --context-dir Data --output-dir Models --table 
+dotnet ef dbcontext scaffold "Name=ConnectionStrings:KatsakaContext" Npgsql.EntityFrameworkCore.PostgreSQL --context-dir Data --output-dir Models --table 
 */
 
 create table responsable(
