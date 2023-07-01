@@ -1,7 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Katsaka.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+
+builder.Services.AddDbContext<KatsakaContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("KatsakaContext") ?? throw new InvalidOperationException("Connection string 'KatsakaContext' not found.")));
+
 
 var app = builder.Build();
 
