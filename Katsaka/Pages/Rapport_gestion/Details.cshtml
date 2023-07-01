@@ -1,0 +1,61 @@
+@page
+@model Katsaka.Pages.Rapport_gestion.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Suivimai</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Longueurmoyenpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Longueurmoyenpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Couleurmoyenpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Couleurmoyenpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Nbrpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Nbrpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Nbrepismoyenparpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Nbrepismoyenparpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Longueurmoyenepis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Longueurmoyenepis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Datesuivi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Datesuivi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.IdparcelleNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.IdparcelleNavigation.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Suivimai?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

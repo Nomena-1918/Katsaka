@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Katsaka.Data;
 using Katsaka.Models;
 
-namespace Katsaka.Pages.Parcelle_gestion
+namespace Katsaka.Pages.Recolte_gestion
 {
     public class EditModel : PageModel
     {
@@ -21,23 +21,22 @@ namespace Katsaka.Pages.Parcelle_gestion
         }
 
         [BindProperty]
-        public Parcelle Parcelle { get; set; } = default!;
+        public Recolte Recolte { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Parcelles == null)
+            if (id == null || _context.Recoltes == null)
             {
                 return NotFound();
             }
 
-            var parcelle =  await _context.Parcelles.FirstOrDefaultAsync(m => m.Id == id);
-            if (parcelle == null)
+            var recolte =  await _context.Recoltes.FirstOrDefaultAsync(m => m.Id == id);
+            if (recolte == null)
             {
                 return NotFound();
             }
-            Parcelle = parcelle;
-           ViewData["Idchamp"] = new SelectList(_context.Champs, "Id", "Nom");
-           ViewData["Idresponsable"] = new SelectList(_context.Responsables, "Id", "Nom");
+            Recolte = recolte;
+           ViewData["Idparcelle"] = new SelectList(_context.Parcelles, "Id", "Nom");
             return Page();
         }
 
@@ -47,7 +46,7 @@ namespace Katsaka.Pages.Parcelle_gestion
         {
 
 
-            _context.Attach(Parcelle).State = EntityState.Modified;
+            _context.Attach(Recolte).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +54,7 @@ namespace Katsaka.Pages.Parcelle_gestion
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParcelleExists(Parcelle.Id))
+                if (!RecolteExists(Recolte.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +67,9 @@ namespace Katsaka.Pages.Parcelle_gestion
             return RedirectToPage("./Index");
         }
 
-        private bool ParcelleExists(int id)
+        private bool RecolteExists(int id)
         {
-          return (_context.Parcelles?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Recoltes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

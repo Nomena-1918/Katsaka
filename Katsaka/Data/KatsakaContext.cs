@@ -238,6 +238,9 @@ public partial class KatsakaContext : DbContext
                 .HasColumnName("longueurmoyenpousse");
             entity.Property(e => e.Nbrepismoyenparpousse).HasColumnName("nbrepismoyenparpousse");
             entity.Property(e => e.Nbrpousse).HasColumnName("nbrpousse");
+            entity.Property(e => e.Nomparcelle)
+                .HasMaxLength(100)
+                .HasColumnName("nomparcelle");
         });
 
         modelBuilder.Entity<VSuiviRecolte>(entity =>

@@ -95,9 +95,10 @@ order by idparcelle;
 
 --Derniers suivi par parcelle
 create view v_list_dernier_suivi as 
-select suivimais.* from suivimais
+select suivimais.*, parcelle.nom as nomparcelle from suivimais
 join v_list_date_dernier_suivi
-on v_list_date_dernier_suivi.maxdatesuivi = suivimais.datesuivi;
+on v_list_date_dernier_suivi.maxdatesuivi = suivimais.datesuivi
+join parcelle on parcelle.id = v_list_date_dernier_suivi.idparcelle;
 
 
 ---------------------------------------------------------
@@ -116,7 +117,6 @@ on v_list_date_dernier_suivi.maxdatesuivi = v_suivi_recolte.datesuivi
 
 where v_suivi_recolte.datesuivi <= recolte.daterecolte
 order by recolte.daterecolte;
-
 
 
 

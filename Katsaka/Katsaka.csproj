@@ -15,6 +15,9 @@
     <None Remove="Pages\Parcelle_gestion\" />
     <None Remove="Pages\ParametreFrequence_gestion\" />
     <None Remove="Pages\ParametreCroissance_gestion\" />
+    <None Remove="Pages\Rapport_gestion\" />
+    <None Remove="Pages\Recolte_gestion\" />
+    <None Remove="Pages\Tendance_gestion\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ze_data\" />
@@ -24,6 +27,9 @@
     <Folder Include="Pages\Parcelle_gestion\" />
     <Folder Include="Pages\ParametreFrequence_gestion\" />
     <Folder Include="Pages\ParametreCroissance_gestion\" />
+    <Folder Include="Pages\Rapport_gestion\" />
+    <Folder Include="Pages\Recolte_gestion\" />
+    <Folder Include="Pages\Tendance_gestion\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
@@ -36,7 +42,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="7.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
@@ -44,7 +49,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="EntityFramework6.Npgsql" Version="6.4.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.8" />
   </ItemGroup>
 </Project>

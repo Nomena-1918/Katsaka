@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Katsaka.Models;
 
 public partial class VListDernierSuivi
 {
+    [Key]
     public int? Id { get; set; }
 
     public int? Idparcelle { get; set; }
@@ -20,4 +22,6 @@ public partial class VListDernierSuivi
     public decimal? Longueurmoyenepis { get; set; }
 
     public DateTime? Datesuivi { get; set; }
+
+    public string? Nomparcelle { get; set; }
 }

@@ -1,0 +1,64 @@
+@page
+@model Katsaka.Pages.Rapport_gestion.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Suivimai</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Longueurmoyenpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Longueurmoyenpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Couleurmoyenpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Couleurmoyenpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Nbrpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Nbrpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Nbrepismoyenparpousse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Nbrepismoyenparpousse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Longueurmoyenepis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Longueurmoyenepis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.Datesuivi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.Datesuivi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Suivimai.IdparcelleNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Suivimai.IdparcelleNavigation.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Suivimai.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

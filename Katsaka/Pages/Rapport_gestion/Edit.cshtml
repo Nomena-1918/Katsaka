@@ -1,0 +1,65 @@
+@page
+@model Katsaka.Pages.Rapport_gestion.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Suivimai</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Suivimai.Id" />
+            <div class="form-group">
+                <label asp-for="Suivimai.Idparcelle" class="control-label"></label>
+                <select asp-for="Suivimai.Idparcelle" class="form-control" asp-items="ViewBag.Idparcelle"></select>
+                <span asp-validation-for="Suivimai.Idparcelle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Longueurmoyenpousse" class="control-label"></label>
+                <input asp-for="Suivimai.Longueurmoyenpousse" class="form-control" />
+                <span asp-validation-for="Suivimai.Longueurmoyenpousse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Couleurmoyenpousse" class="control-label"></label>
+                <input asp-for="Suivimai.Couleurmoyenpousse" class="form-control" />
+                <span asp-validation-for="Suivimai.Couleurmoyenpousse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Nbrpousse" class="control-label"></label>
+                <input asp-for="Suivimai.Nbrpousse" class="form-control" />
+                <span asp-validation-for="Suivimai.Nbrpousse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Nbrepismoyenparpousse" class="control-label"></label>
+                <input asp-for="Suivimai.Nbrepismoyenparpousse" class="form-control" />
+                <span asp-validation-for="Suivimai.Nbrepismoyenparpousse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Longueurmoyenepis" class="control-label"></label>
+                <input asp-for="Suivimai.Longueurmoyenepis" class="form-control" />
+                <span asp-validation-for="Suivimai.Longueurmoyenepis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suivimai.Datesuivi" class="control-label"></label>
+                <input asp-for="Suivimai.Datesuivi" class="form-control" />
+                <span asp-validation-for="Suivimai.Datesuivi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

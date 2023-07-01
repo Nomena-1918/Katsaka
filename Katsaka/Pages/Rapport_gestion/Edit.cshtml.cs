@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Katsaka.Data;
 using Katsaka.Models;
 
-namespace Katsaka.Pages.Parcelle_gestion
+namespace Katsaka.Pages.Rapport_gestion
 {
     public class EditModel : PageModel
     {
@@ -21,23 +21,22 @@ namespace Katsaka.Pages.Parcelle_gestion
         }
 
         [BindProperty]
-        public Parcelle Parcelle { get; set; } = default!;
+        public Suivimai Suivimai { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Parcelles == null)
+            if (id == null || _context.Suivimais == null)
             {
                 return NotFound();
             }
 
-            var parcelle =  await _context.Parcelles.FirstOrDefaultAsync(m => m.Id == id);
-            if (parcelle == null)
+            var suivimai =  await _context.Suivimais.FirstOrDefaultAsync(m => m.Id == id);
+            if (suivimai == null)
             {
                 return NotFound();
             }
-            Parcelle = parcelle;
-           ViewData["Idchamp"] = new SelectList(_context.Champs, "Id", "Nom");
-           ViewData["Idresponsable"] = new SelectList(_context.Responsables, "Id", "Nom");
+            Suivimai = suivimai;
+           ViewData["Idparcelle"] = new SelectList(_context.Parcelles, "Id", "Id");
             return Page();
         }
 
@@ -45,9 +44,12 @@ namespace Katsaka.Pages.Parcelle_gestion
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-
-            _context.Attach(Parcelle).State = EntityState.Modified;
+            _context.Attach(Suivimai).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +57,7 @@ namespace Katsaka.Pages.Parcelle_gestion
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParcelleExists(Parcelle.Id))
+                if (!SuivimaiExists(Suivimai.Id))
                 {
                     return NotFound();
                 }
@@ -68,9 +70,9 @@ namespace Katsaka.Pages.Parcelle_gestion
             return RedirectToPage("./Index");
         }
 
-        private bool ParcelleExists(int id)
+        private bool SuivimaiExists(int id)
         {
-          return (_context.Parcelles?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Suivimais?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

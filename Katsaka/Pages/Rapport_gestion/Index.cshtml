@@ -1,0 +1,75 @@
+@page
+@model Katsaka.Pages.Rapport_gestion.IndexModel
+
+@{
+    ViewData["Title"] = "Rapport maïs";
+}
+
+<h1>Rapport - suivi maïs</h1>
+
+<p>
+    <a asp-page="Create">Ajouter</a>
+</p>
+<p>
+    <a asp-page="ListDernierSuivi">Les derniers rapports</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Longueurmoyenpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Couleurmoyenpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Nbrpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Nbrepismoyenparpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Longueurmoyenepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].Datesuivi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suivimai[0].IdparcelleNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Suivimai) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longueurmoyenpousse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Couleurmoyenpousse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nbrpousse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nbrepismoyenparpousse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longueurmoyenepis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datesuivi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

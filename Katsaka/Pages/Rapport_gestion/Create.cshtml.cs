@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Katsaka.Data;
 using Katsaka.Models;
 
-namespace Katsaka.Pages.Parcelle_gestion
+namespace Katsaka.Pages.Rapport_gestion
 {
     public class CreateModel : PageModel
     {
@@ -21,24 +21,23 @@ namespace Katsaka.Pages.Parcelle_gestion
 
         public IActionResult OnGet()
         {
-        ViewData["Idchamp"] = new SelectList(_context.Champs, "Id", "Nom");
-        ViewData["Idresponsable"] = new SelectList(_context.Responsables, "Id", "Nom");
+        ViewData["Idparcelle"] = new SelectList(_context.Parcelles, "Id", "Nom");
             return Page();
         }
 
         [BindProperty]
-        public Parcelle Parcelle { get; set; } = default!;
+        public Suivimai Suivimai { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if ( _context.Parcelles == null || Parcelle == null)
+          if (!ModelState.IsValid || _context.Suivimais == null || Suivimai == null)
             {
                 return Page();
             }
 
-            _context.Parcelles.Add(Parcelle);
+            _context.Suivimais.Add(Suivimai);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -1,0 +1,60 @@
+@page
+@model Katsaka.Pages.Recolte_gestion.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Récolte</h1>
+
+<p>
+    <a asp-page="Create">Ajouter</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].Poidstotalgraine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].Nbrtotalepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].Longueurmoyenepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].Daterecolte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].IdparcelleNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Recolte) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Poidstotalgraine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nbrtotalepis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longueurmoyenepis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Daterecolte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
