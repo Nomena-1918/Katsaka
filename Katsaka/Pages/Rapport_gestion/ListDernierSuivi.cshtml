@@ -45,7 +45,7 @@
                 @Html.DisplayNameFor(model => model.VListDernierSuivi[0].Datesuivi)
             </th>
 
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -77,9 +77,10 @@
             </td>
 
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="px-1" asp-page="./Edit" asp-route-id="@item.Id">🖋️</a> 
+                <a class="px-1" asp-page="./Details" asp-route-id="@item.Id">📑</a> 
+                <a class="px-1" asp-page="./Delete" asp-route-id="@item.Id">🗑️</a> 
+                <a class="px-1" asp-page="./ComparaisonDerniersRapports" asp-route-idparcelle="@item.Idparcelle">📊</a>
             </td>
         </tr>
 }

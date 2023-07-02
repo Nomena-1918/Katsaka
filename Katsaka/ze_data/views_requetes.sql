@@ -72,15 +72,18 @@ create table parametreFrequence(
 
 -- DEVELOPPEMENT/POUSSE MAIS
 --Suivis à comparer pour détecter les anomalies (les deux derniers par défaut)
-select * from suivimais where idparcelle=4 order by datesuivi desc limit 2;
+select suivimais.*, parcelle.nom as nomparcelle
+from suivimais
+join parcelle on parcelle.id = suivimais.idparcelle
+
+where idparcelle=3 order by datesuivi desc limit 2;
 
 
 
 -- RECOLTE
 -- Dernière récolte et dernier suivi à comparer pour détecter les anomalies
 
---Dernier suivi avant récoltes
-
+--Dernier suivi avant récolte
 create view v_suivi_recolte as
 select id, idparcelle, longueurmoyenpousse, couleurmoyenpousse, nbrpousse*nbrepismoyenparpousse as nbrepistotalsuivi,  longueurmoyenepis, datesuivi
 from suivimais;
@@ -93,12 +96,14 @@ from suivimais
 group by idparcelle
 order by idparcelle;
 
+
 --Derniers suivi par parcelle
 create view v_list_dernier_suivi as 
 select suivimais.*, parcelle.nom as nomparcelle from suivimais
 join v_list_date_dernier_suivi
 on v_list_date_dernier_suivi.maxdatesuivi = suivimais.datesuivi
-join parcelle on parcelle.id = v_list_date_dernier_suivi.idparcelle;
+join parcelle on parcelle.id = v_list_date_dernier_suivi.idparcelle
+order by idparcelle;
 
 
 ---------------------------------------------------------

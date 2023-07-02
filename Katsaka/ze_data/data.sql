@@ -27,13 +27,13 @@ insert into parcelle(nom, idchamp, remarque, idresponsable) values
 --========SUIVIMAIS===============
 
 -- Scénarios : 
--- P1, 1 suivi
+-- P1, 1 suivi, aucune anomalie
 -- P2, 2 suivis, aucune anomalie
 -- P3, 3 suivis, anomalies : couleur, nbrEpisMoyenParPousse
 
 -- P4, 3 suivis, anomalies : longueurMoyenEpis < 15cm(paramètre croissance) mais n'ayant plus poussé, longueurMoyenPousse
 -- P5, 2 suivis, aucune anomalie
-
+-- P6, 2 suivis, aucune anomalie
 
 -- P1
 insert into suivimais(idparcelle ,longueurMoyenPousse, couleurMoyenPousse ,nbrPousse ,nbrEpisMoyenParPousse, longueurMoyenEpis,dateSuivi)
@@ -54,7 +54,7 @@ insert into suivimais(idparcelle ,longueurMoyenPousse, couleurMoyenPousse ,nbrPo
 values (3, 100, 90, 304, 3, 8, now()-'2 weeks'::interval);
 
 insert into suivimais(idparcelle ,longueurMoyenPousse, couleurMoyenPousse ,nbrPousse ,nbrEpisMoyenParPousse, longueurMoyenEpis,dateSuivi)
-values (3, 100, 87, 304, 2, 14, default);
+values (3, 100, 87, 304, 2, 14, now());
 
 -- P4
 insert into suivimais(idparcelle ,longueurMoyenPousse, couleurMoyenPousse ,nbrPousse ,nbrEpisMoyenParPousse, longueurMoyenEpis,dateSuivi)
