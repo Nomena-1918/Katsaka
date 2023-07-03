@@ -1,0 +1,165 @@
+@page
+@model Katsaka.Pages.Rapport_gestion.ComparaisonRapportRecolteModel
+
+@{
+    ViewData["Title"] = "ComparaisonRapportRecolte";
+}
+
+<h1>Dernier Rapport avant Recolte</h1>
+<p class="py-3 h2">
+    Comparaisons
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Idparcelle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Longueurmoyenpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Couleurmoyenpousse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Nbrepistotalsuivi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].LongueurmoyenepisSuivi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Datesuivi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Idrecolte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Poidstotalgraine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Nbrtotalepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].LongueurmoyenepisRecolte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VDerniersuiviAvantRecolte[0].Daterecolte)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.VDerniersuiviAvantRecolte)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idparcelle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longueurmoyenpousse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Couleurmoyenpousse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nbrepistotalsuivi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongueurmoyenepisSuivi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datesuivi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idrecolte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Poidstotalgraine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nbrtotalepis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongueurmoyenepisRecolte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Daterecolte)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Idsuivi">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Idsuivi">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Idsuivi">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<p class="py-3 h2">
+    Evolutions
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.diffSuiviRecolte.LongueurmoyenepisRecolte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.diffSuiviRecolte.Nbrtotalepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.diffSuiviRecolte.diffDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>
+                @Html.DisplayFor(model => @Model.diffSuiviRecolte.LongueurmoyenepisRecolte)
+            </td>
+            <td>
+                @Html.DisplayFor(model => @Model.diffSuiviRecolte.Nbrtotalepis)
+            </td>
+            <td>
+                @Html.DisplayFor(model => @Model.diffSuiviRecolte.diffDate)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<p class="py-3 h2">
+    Anomalies
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Attribut concerné
+            </th>
+            <th>
+                Anomalie détectée
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (KeyValuePair<string, string> kvp in Model.listAnomalies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => kvp.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => kvp.Value)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

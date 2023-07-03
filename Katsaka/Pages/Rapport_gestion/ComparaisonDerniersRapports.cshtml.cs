@@ -40,38 +40,11 @@ namespace Katsaka.Pages.Rapport_gestion
                 {
                     connection.Open();
 
-                    // Sélection derniers suivis
-                    string queryString = "select suivimais.*, parcelle.nom as nomparcelle from suivimais join parcelle on parcelle.id = suivimais.idparcelle where idparcelle=@idparcelle order by datesuivi desc limit 2;";
-                    var command = new NpgsqlCommand();
-                    command.Connection = connection;
-                    command.CommandText = queryString;
-                    command.Parameters.AddWithValue("@idparcelle", this.idparcelle);
-
-                    NpgsqlDataReader reader = command.ExecuteReader();
-
-                    VListDernierSuivi suivimais;
-                    while (reader.Read())
-                    {
-                        suivimais = new();
-
-    //  id | idparcelle | longueurmoyenpousse | couleurmoyenpousse | nbrpousse | nbrepismoyenparpousse | longueurmoyenepis | datesuivi  | nomparcelle 
-
-                        suivimais.Id = (int)reader["id"];
-                        suivimais.Idparcelle = (int)reader["idparcelle"];
-                        suivimais.Longueurmoyenpousse = (decimal)reader["longueurmoyenpousse"];
-                        suivimais.Couleurmoyenpousse = (int)reader["couleurmoyenpousse"];
-                        suivimais.Nbrpousse = (int)reader["nbrpousse"];
-                        suivimais.Nbrepismoyenparpousse = (int)reader["nbrepismoyenparpousse"];
-                        suivimais.Longueurmoyenepis = (decimal)reader["longueurmoyenepis"];
-                        suivimais.Datesuivi = (DateTime)reader["datesuivi"];
-                        suivimais.Nomparcelle = (string)reader["nomparcelle"];
-
-                        listDerniersSuivi.Add(suivimais);
-                    }
-                    reader.Close();
+                    // Sélection des 2 derniers rapports
+                    listDerniersSuivi = VListDernierSuivi.GetDerniersRapports(connection, idparcelle);
 
 
-                    if(listDerniersSuivi.Count > 1)
+                    if (listDerniersSuivi.Count > 1)
                         // Différence entre les 2 suivis
                         diffSuivis = listDerniersSuivi[0].GetDiff(connection, listDerniersSuivi[1]);
 
@@ -89,11 +62,6 @@ namespace Katsaka.Pages.Rapport_gestion
             // Liste des anomalies
             listAnomalies = listDerniersSuivi[0].GetAnomalie(diffSuivis);
 
-            // Boucle Dictionnaire C#
-            /*
-             foreach(KeyValuePair<int, string> kvp in flowerNames)
-                Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
-             */
         }
     }
 }

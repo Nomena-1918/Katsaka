@@ -111,4 +111,44 @@ public partial class VListDernierSuivi
 
         return listAnomalies;
     }
+
+    public static List<VListDernierSuivi> GetDerniersRapports(NpgsqlConnection connection, int idparcelle) {
+        List<VListDernierSuivi> listDerniersSuivi = new();
+
+        // Sélection derniers suivis
+        string queryString = "select suivimais.*, parcelle.nom as nomparcelle from suivimais join parcelle on parcelle.id = suivimais.idparcelle where idparcelle=@idparcelle order by datesuivi desc limit 2;";
+        var command = new NpgsqlCommand();
+        command.Connection = connection;
+        command.CommandText = queryString;
+        command.Parameters.AddWithValue("@idparcelle", idparcelle);
+
+        NpgsqlDataReader reader = command.ExecuteReader();
+
+        VListDernierSuivi suivimais;
+        while (reader.Read())
+        {
+            suivimais = new();
+
+            //  id | idparcelle | longueurmoyenpousse | couleurmoyenpousse | nbrpousse | nbrepismoyenparpousse | longueurmoyenepis | datesuivi  | nomparcelle 
+
+            suivimais.Id = (int)reader["id"];
+            suivimais.Idparcelle = (int)reader["idparcelle"];
+            suivimais.Longueurmoyenpousse = (decimal)reader["longueurmoyenpousse"];
+            suivimais.Couleurmoyenpousse = (int)reader["couleurmoyenpousse"];
+            suivimais.Nbrpousse = (int)reader["nbrpousse"];
+            suivimais.Nbrepismoyenparpousse = (int)reader["nbrepismoyenparpousse"];
+            suivimais.Longueurmoyenepis = (decimal)reader["longueurmoyenepis"];
+            suivimais.Datesuivi = (DateTime)reader["datesuivi"];
+            suivimais.Nomparcelle = (string)reader["nomparcelle"];
+
+            listDerniersSuivi.Add(suivimais);
+        }
+        reader.Close();
+
+
+
+
+
+        return listDerniersSuivi;
+    }
 }

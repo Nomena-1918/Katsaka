@@ -1,0 +1,53 @@
+﻿@page
+@model Katsaka.Pages.Recolte_gestion.PrevisionRecolteModelModel
+@{
+}
+
+
+
+<h1>Prévsions Récolte</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].IdparcelleNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].IdparcelleNavigation.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Poidstotalgraine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Nbrtotalepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Longueurmoyenepis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.listRecoltePrevu)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Poidstotalgraine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nbrtotalepis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longueurmoyenepis)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

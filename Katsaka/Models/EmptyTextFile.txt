@@ -1,26 +1,21 @@
-﻿
+﻿<td>
+    @Html.DisplayFor(modeldiffSuivis => @Model.diffSuivis.Longueurmoyenpousse)
+</td>
 
 
 
 
 
-<tr>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.Longueurmoyenpousse)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.Couleurmoyenpousse)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.Nbrpousse)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.Nbrepismoyenparpousse)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.Longueurmoyenepis)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.diffSuivis.diffDate)
-    </th>
-</tr>
+
+
+
+
+<td>
+    @Html.DisplayFor(model => @Model.diffSuiviRecolte.LongueurmoyenepisDiff)
+</td>
+<td>
+    @Html.DisplayFor(model => @Model.diffSuiviRecolte.NbrepissuiviDiff)
+</td>
+<td>
+    @Html.DisplayFor(model => @Model.diffSuiviRecolte.diffDate)
+</td>
