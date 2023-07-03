@@ -32,7 +32,7 @@ namespace Katsaka.Pages.Rapport_gestion
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Suivimais == null || Suivimai == null)
+          if (_context.Suivimais == null || Suivimai == null)
             {
                 return Page();
             }

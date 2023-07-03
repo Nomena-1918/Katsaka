@@ -4,32 +4,33 @@
 }
 
 
-
-<h1>Prévsions Récolte</h1>
+<h1 class="py-2">Prévisions Récolte</h1>
+<h3>Résultats minimum</h3>
+<p class="py-2">Nombre et longueur des épis des derniers suivis</p>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].IdparcelleNavigation)
+                @Html.DisplayNameFor(model => model.listRecoltePrevuMin[0].IdparcelleNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].IdparcelleNavigation.Nom)
+                @Html.DisplayNameFor(model => model.listRecoltePrevuMin[0].IdparcelleNavigation.Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Poidstotalgraine)
+                @Html.DisplayNameFor(model => model.listRecoltePrevuMin[0].Poidstotalgraine)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Nbrtotalepis)
+                @Html.DisplayNameFor(model => model.listRecoltePrevuMin[0].Nbrtotalepis)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.listRecoltePrevu[0].Longueurmoyenepis)
+                @Html.DisplayNameFor(model => model.listRecoltePrevuMin[0].Longueurmoyenepis)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.listRecoltePrevu)
+        @foreach (var item in Model.listRecoltePrevuMin)
         {
             <tr>
                 <td>
@@ -51,3 +52,63 @@
         }
     </tbody>
 </table>
+
+
+
+<div class="py-4"></div>
+
+
+<h3 class="py-2">Résultats optimistes</h3>
+<p>Nombre et longueur des épis des derniers suivis + évolutions par rapport à l'avant dernier suivi</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevuLinear[0].IdparcelleNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevuLinear[0].IdparcelleNavigation.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevuLinear[0].Poidstotalgraine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevuLinear[0].Nbrtotalepis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.listRecoltePrevuLinear[0].Longueurmoyenepis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.listRecoltePrevuLinear)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Poidstotalgraine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nbrtotalepis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longueurmoyenepis)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+

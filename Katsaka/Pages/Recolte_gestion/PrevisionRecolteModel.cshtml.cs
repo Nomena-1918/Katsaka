@@ -17,8 +17,9 @@ namespace Katsaka.Pages.Recolte_gestion
         private readonly KatsakaContext _context;
         private readonly IConfiguration _configuration;
         public PrevisionRecolte prevision { get; set; }
-        public VDerniersuiviAvantRecolte suivi_recolte_ref { get; set; }
-        public List<Recolte> listRecoltePrevu { get; set; }
+        public Recolte recolte_ref { get; set; }
+        public List<Recolte> listRecoltePrevuMin { get; set; }
+        public List<Recolte> listRecoltePrevuLinear { get; set; }
 
 
         public PrevisionRecolteModelModel(KatsakaContext context, IConfiguration configuration)
@@ -29,14 +30,15 @@ namespace Katsaka.Pages.Recolte_gestion
 
         public async Task OnGetAsync(int idparcelle)
         {
-            listRecoltePrevu = new();
+            listRecoltePrevuMin = new();
+            listRecoltePrevuLinear = new();
 
-            var listSuivi = await _context.VDerniersuiviAvantRecoltes
+            var listSuivi = await _context.Recoltes
                     .Where(v => v.Idparcelle == idparcelle)
                     .ToListAsync();
 
             // DerniersuiviAvantRecolte de référence
-            suivi_recolte_ref = listSuivi[0];
+            recolte_ref = listSuivi[0];
 
             // Sélection des derniers suivis des récoltes
             var derniersSuivi = await _context.VListDernierSuivis
@@ -52,19 +54,27 @@ namespace Katsaka.Pages.Recolte_gestion
                 {
                     connection.Open();
 
-                    Recolte r;
-                    PrevisionRecolte prevision;
+                    // Set CoeffKgCmEpis de maïs
+                    PrevisionRecolte prevision = new(recolte_ref);
+                    Recolte r, r1;
+                    VListDernierSuivi avantDernierSuivi;
 
-                    foreach(VListDernierSuivi suiviPourPrev in derniersSuivi) {
-                        r = new();
-                        prevision = new();
+                    foreach (VListDernierSuivi dernierSuivi in derniersSuivi) {
 
-                        prevision.setListDerniersSuivi(connection, suiviPourPrev);
-                        prevision.setCoeffs();
+                        // Récolte prévue à partir d'un suivi maïs
+                        r = prevision.getPrevisionRecolteMin(dernierSuivi);
+
+                        // Récolte calculée de manière linéaire
+                        avantDernierSuivi = null;
+                        List<VListDernierSuivi> listDernierSuivi = VListDernierSuivi.GetDerniersRapports(connection, idparcelle);
+                        if (listDernierSuivi.Count > 0)
+                            avantDernierSuivi = listDernierSuivi[1];
+
+                        prevision.setEvolutionLinear(dernierSuivi, avantDernierSuivi);
+                        r1 = prevision.getPrevisionRecolteLinear();
                         
-                        r = prevision.getPrevisionRecolte(suivi_recolte_ref);
-
-                        listRecoltePrevu.Add(r);
+                        listRecoltePrevuMin.Add(r);
+                        listRecoltePrevuLinear.Add(r1);
                     }
 
                 }

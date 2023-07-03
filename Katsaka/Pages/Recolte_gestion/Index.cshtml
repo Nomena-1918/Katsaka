@@ -14,6 +14,12 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].IdparcelleNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recolte[0].IdparcelleNavigation.Nom)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Recolte[0].Poidstotalgraine)
             </th>
             <th>
@@ -25,15 +31,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.Recolte[0].Daterecolte)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Recolte[0].IdparcelleNavigation)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Recolte) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Nom)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Poidstotalgraine)
             </td>
@@ -46,9 +56,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Daterecolte)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdparcelleNavigation.Id)
-            </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |

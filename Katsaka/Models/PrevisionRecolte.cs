@@ -6,88 +6,129 @@ namespace Katsaka.Models
 {
 	public class PrevisionRecolte
     {
-        public PrevisionRecolte() {
-            parcelle = new();
-        }
+        // Dernier suivi maïs pour prévision
+        VListDernierSuivi dernierSuivi { get; set; }
+
+        // Avanat dernier suivi pour prévision de manière linéaire
+        VListDernierSuivi avantDernierSuivi { get; set; }
+
+        // kg de graine de maïs par cm d'épis
+        public decimal? coeffKgCmEpis { get; set; }
+
 
         // Pour les prévisions par rapport aux 2 derniers rapports - méthode linéaire (plus proche de la réalité)
-        public decimal? coeffEvolutionNbrEpis { get; set; }
-        public decimal? coeffEvolutionLongEpis { get; set; }
-        public decimal? coeffEvolutionNbrPousse { get; set; }
-        public List<VListDernierSuivi> listDerniersSuivi { get; set; }
-        public Parcelle parcelle { get; set; }
+        public decimal? EvolutionNbrEpis { get; set; }
+        public decimal? EvolutionLongEpis { get; set; }
+        public decimal? EvolutionNbrPousse { get; set; }
 
 
-        public void setListDerniersSuivi(NpgsqlConnection connection, VListDernierSuivi suiviPourPrev) {
-
-            // Sélection des 2 derniers rapports
-            listDerniersSuivi = VListDernierSuivi.GetDerniersRapports(connection, (int)suiviPourPrev.Idparcelle);
-
-            parcelle.Id = (int)suiviPourPrev.Idparcelle;
-            parcelle.Nom = suiviPourPrev.Nomparcelle;
-        }
-        
-        public void setCoeffs() {
-            setCoeffEvolutionLongEpis(listDerniersSuivi);
-            setCoeffEvolutionNbrEpis(listDerniersSuivi);
-            setCoeffEvolutionNbrPousse(listDerniersSuivi);
-        }
-        
-        // Prevision d'une parcelle à partir d'une parcelle
-        // Simple régle de trois + Approximation linéaire
-        public  Recolte getPrevisionRecolte(VDerniersuiviAvantRecolte suivi_recolte_ref)
+        // ============ CONSTRUCTORS =============
+        public PrevisionRecolte(Recolte recolte_ref)
         {
-            Recolte recolte = new();
-            
-            int estimationNbrEpis, estimationNbrPousse;
-            if(listDerniersSuivi.Count > 1) {
-                estimationNbrEpis = (int)listDerniersSuivi[1].Nbrepismoyenparpousse;
-                estimationNbrPousse = (int)listDerniersSuivi[1].Nbrpousse;
-                recolte.Longueurmoyenepis = coeffEvolutionLongEpis * listDerniersSuivi[1].Longueurmoyenepis;
-            }
-            else {
-                estimationNbrEpis = 1;
-                estimationNbrPousse = 1;
-                recolte.Longueurmoyenepis = coeffEvolutionLongEpis * listDerniersSuivi[0].Longueurmoyenepis;
-            }
-
-
-            int nbrEpisParPoussePrevu = (int)(coeffEvolutionNbrEpis * estimationNbrEpis);
-            int nbrPoussePrevu = (int)(coeffEvolutionNbrPousse * estimationNbrPousse);
-            
-            recolte.Nbrtotalepis = nbrEpisParPoussePrevu * nbrPoussePrevu;
-            
-            recolte.Poidstotalgraine = recolte.Nbrtotalepis * (suivi_recolte_ref.Poidstotalgraine / (suivi_recolte_ref.Nbrtotalepis + (decimal)0.001));
-            recolte.IdparcelleNavigation = parcelle;
-
-            return recolte;
+            setCoeffKgCmEpis(recolte_ref);
         }
 
 
-        
-        public void setCoeffEvolutionLongEpis(List<VListDernierSuivi> listDerniersSuivi)
+        // ============ SETTERS =================
+
+        // MINIMUM
+        public void setCoeffKgCmEpis(Recolte recolte_ref) {
+            // Calcul du poids minimal prévu
+            coeffKgCmEpis = recolte_ref.Poidstotalgraine / (recolte_ref.Nbrtotalepis * recolte_ref.Longueurmoyenepis);
+        }
+
+
+        // LINEAIRE
+        public void setEvolutionLinear(VListDernierSuivi dernierSuivi, VListDernierSuivi avantDernierSuivi)
         {
-            if (listDerniersSuivi.Count > 1)
-                coeffEvolutionLongEpis = listDerniersSuivi[0].Longueurmoyenepis / (listDerniersSuivi[1].Longueurmoyenepis + (decimal)0.001);
+            this.dernierSuivi = dernierSuivi;
+
+            setEvolutionNbrEpis(avantDernierSuivi);
+            setEvolutionLongEpis(avantDernierSuivi);
+            setEvolutionNbrPousse(avantDernierSuivi);
+        }
+
+
+        public void setEvolutionNbrEpis(VListDernierSuivi avantDernierSuivi)
+        {
+            if (avantDernierSuivi != null)
+                EvolutionNbrEpis = dernierSuivi.Nbrepismoyenparpousse - avantDernierSuivi.Nbrepismoyenparpousse;
+
             else
-                coeffEvolutionLongEpis = 1;
+                EvolutionNbrEpis = dernierSuivi.Nbrepismoyenparpousse;
         }
 
-        public void setCoeffEvolutionNbrEpis(List<VListDernierSuivi> listDerniersSuivi)
+        public void setEvolutionLongEpis(VListDernierSuivi avantDernierSuivi)
         {
-            if (listDerniersSuivi.Count > 1)
-                coeffEvolutionNbrEpis = (decimal?)(listDerniersSuivi[0].Nbrepismoyenparpousse / (listDerniersSuivi[1].Nbrepismoyenparpousse + 0.001));
+            if (avantDernierSuivi != null)
+                EvolutionLongEpis = dernierSuivi.Longueurmoyenepis - avantDernierSuivi.Longueurmoyenepis;
+
             else
-                coeffEvolutionNbrEpis =  1;
+                EvolutionLongEpis = dernierSuivi.Longueurmoyenepis;
         }
 
-        public void setCoeffEvolutionNbrPousse(List<VListDernierSuivi> listDerniersSuivi)
+        public void setEvolutionNbrPousse(VListDernierSuivi avantDernierSuivi)
         {
-            if (listDerniersSuivi.Count > 1)
-                coeffEvolutionNbrPousse = (decimal?)(listDerniersSuivi[0].Nbrpousse / (listDerniersSuivi[1].Nbrpousse + 0.001));
+            if (avantDernierSuivi != null)
+                EvolutionNbrPousse = dernierSuivi.Nbrpousse - avantDernierSuivi.Nbrpousse;
+
             else
-                coeffEvolutionNbrPousse = 1;
+                EvolutionNbrPousse = dernierSuivi.Nbrpousse;
         }
+
+
+
+
+
+
+        // ============ PREVISIONS =================
+
+        // MINIMUM - Recolte à partir du dernier suivi
+        public Recolte getPrevisionRecolteMin(VListDernierSuivi dernierSuivi)
+        {
+            Recolte recolte_prevue = new();
+
+            // Les attributs qui changent pas
+            recolte_prevue.IdparcelleNavigation = new();
+            recolte_prevue.IdparcelleNavigation.Id = (int)dernierSuivi.Idparcelle;
+            recolte_prevue.IdparcelleNavigation.Nom = dernierSuivi.Nomparcelle;
+            recolte_prevue.Longueurmoyenepis = dernierSuivi.Longueurmoyenepis;
+            recolte_prevue.Nbrtotalepis = dernierSuivi.Nbrepismoyenparpousse * dernierSuivi.Nbrpousse;
+
+
+            // Calcul à partir du coeffKgCmEpis
+            recolte_prevue.Poidstotalgraine = coeffKgCmEpis * recolte_prevue.Nbrtotalepis * recolte_prevue.Longueurmoyenepis;
+
+            return recolte_prevue;
+        }
+
+
+        // LINEAIRE - Recolte à partir de la différence entre le dernier suivi et l'avant dernier suvi
+        public Recolte getPrevisionRecolteLinear()
+        {
+            Recolte recolte_prevue = new();
+
+            // Les attributs qui changent pas
+            recolte_prevue.IdparcelleNavigation = new();
+            recolte_prevue.IdparcelleNavigation.Id = (int)dernierSuivi.Idparcelle;
+            recolte_prevue.IdparcelleNavigation.Nom = dernierSuivi.Nomparcelle;
+
+
+
+            // Les attributs calculés de manière linéaire
+            recolte_prevue.Longueurmoyenepis = dernierSuivi.Longueurmoyenepis + EvolutionLongEpis;
+
+            var Nbrepismoyenparpousse_prevu = dernierSuivi.Nbrepismoyenparpousse + EvolutionNbrEpis;
+            var Nbrpousse_prevu = dernierSuivi.Nbrpousse + EvolutionNbrPousse;
+            recolte_prevue.Nbrtotalepis = (int?)(Nbrepismoyenparpousse_prevu * Nbrpousse_prevu);
+
+
+            // Calcul à partir du coeffKgCmEpis
+            recolte_prevue.Poidstotalgraine = coeffKgCmEpis * recolte_prevue.Nbrtotalepis * recolte_prevue.Longueurmoyenepis;
+
+            return recolte_prevue;
+        }
+
 
 
 

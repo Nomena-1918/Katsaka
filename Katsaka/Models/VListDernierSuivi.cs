@@ -112,6 +112,46 @@ public partial class VListDernierSuivi
         return listAnomalies;
     }
 
+    // Avant dernier rapport d'un rapport précis
+    public static VListDernierSuivi GetAavantDernierRapports(NpgsqlConnection connection, VListDernierSuivi dernierSuivi)
+    {
+
+        // Sélection derniers suivis
+        string queryString = "select * from v_suivi_recolte where idparcelle=@idparcelle order by datesuivi desc limit 1  OFFSET (SELECT COUNT(*) - 2 from v_suivi_recolte where idparcelle=@idparcelle);";
+        var command = new NpgsqlCommand();
+        command.Connection = connection;
+        command.CommandText = queryString;
+        command.Parameters.AddWithValue("@idparcelle", dernierSuivi.Idparcelle);
+
+        NpgsqlDataReader reader = command.ExecuteReader();
+
+        VListDernierSuivi suivimais = new();
+        while (reader.Read())
+        {
+            //  id | idparcelle | longueurmoyenpousse | couleurmoyenpousse | nbrpousse | nbrepismoyenparpousse | longueurmoyenepis | datesuivi  | nomparcelle 
+
+            suivimais.Id = (int)reader["id"];
+            suivimais.Idparcelle = (int)reader["idparcelle"];
+            suivimais.Longueurmoyenpousse = (decimal)reader["longueurmoyenpousse"];
+            suivimais.Couleurmoyenpousse = (int)reader["couleurmoyenpousse"];
+            suivimais.Nbrpousse = (int)reader["nbrpousse"];
+            suivimais.Nbrepismoyenparpousse = (int)reader["nbrepismoyenparpousse"];
+            suivimais.Longueurmoyenepis = (decimal)reader["longueurmoyenepis"];
+            suivimais.Datesuivi = (DateTime)reader["datesuivi"];
+            suivimais.Nomparcelle = (string)reader["nomparcelle"];
+
+            
+        }
+        reader.Close();
+
+        return suivimais;
+    }
+
+
+
+
+
+
     public static List<VListDernierSuivi> GetDerniersRapports(NpgsqlConnection connection, int idparcelle) {
         List<VListDernierSuivi> listDerniersSuivi = new();
 
@@ -144,10 +184,6 @@ public partial class VListDernierSuivi
             listDerniersSuivi.Add(suivimais);
         }
         reader.Close();
-
-
-
-
 
         return listDerniersSuivi;
     }
